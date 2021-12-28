@@ -1,7 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import { retrieveAllImages } from './services/retrieveService';
+import { useEffect, useState } from 'react';
 
-function App() {
+ function App() {
+   const [data, setData] = useState([]);
+   useEffect(()=>{
+    const x = retrieveAllImages().then( (resp) =>{
+      setData(JSON.stringify(resp));
+      console.log(`resp ${JSON.stringify(resp,null,2)}`)
+    });
+   },[]);
+
+
   return (
     <div className="App">
       <header className="App-header">
@@ -15,7 +26,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn React ({data})
         </a>
       </header>
     </div>
