@@ -2,33 +2,26 @@ import logo from './logo.svg';
 import './App.css';
 import { retrieveAllImages } from './services/retrieveService';
 import { useEffect, useState } from 'react';
+import ImageGrid from './ImageGrid';
 
  function App() {
    const [data, setData] = useState([]);
    useEffect(()=>{
     const x = retrieveAllImages().then( (resp) =>{
-      setData(JSON.stringify(resp));
+      const respMap = resp.map((x)=>{
+        return `<li>${x.urlsascsv}</li>`
+      })
+      setData(resp);
       console.log(`resp ${JSON.stringify(resp,null,2)}`)
+      console.log(`respMap ${respMap}`)
     });
    },[]);
 
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React ({data})
-        </a>
-      </header>
+    <div className="App"> 
+          <h1> Image Gallery</h1> 
+          <ImageGrid data={data} />
     </div>
   );
 }
