@@ -1,8 +1,8 @@
 import './Search.css';
 
-const Search = ({handleChange})=>{
+const Search = ({handleChange, value})=>{
     return (
-        <input type="search" placeholder="Search" onChange={ handleChange} />
+        <input type="search" placeholder="Search" onChange={ handleChange} value={value}/>
     )
 }
 

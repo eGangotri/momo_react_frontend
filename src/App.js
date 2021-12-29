@@ -9,6 +9,9 @@ import Select from './components/select/Select';
 
  function App() {
    const [data, setData] = useState([]);
+   const [input, setInput] = useState('');
+   const [selectInput, setSelectInput] = useState('');
+   
    useEffect(()=>{
     const x = retrieveAllImages().then( (resp) => {
       const respMap = resp.map((x)=>{
@@ -20,22 +23,58 @@ import Select from './components/select/Select';
     });
    },[]);
 
-   const handleChange = (e) => {
-     console.log(`e ${e}`)
+   useEffect(()=>{
+     if(input === ''){
+      const x = retrieveAllImages().then( (resp) => {
+        const respMap = resp.map((x)=>{
+          return `<li>${x.urlsascsv}</li>`
+        })
+        setData(resp);
+      });
+     }
+     else{
+      setData(data.filter(_x => _x.urlsascsv.includes(input)));
+     }
+   },[input]);
+
+   useEffect(()=>{
+    if (selectInput === 'image'){
+
+    }
+    
+    else if (selectInput === 'video'){
+
+    }
+    else{
+
+    }
+  },[selectInput]);
+
+
+   const handleSelectChange = (e) => {
+     console.log(`e ${e.target.value}`)
+     setSelectInput(e.target.value);
    }
 
    const handleClick = (e) => {
-    console.log(`e ${e}`)
+    console.log(`e ${e.target.value}`)
   }
 
+  const handleReset = (e) => {
+    setInput("");
+    setSelectInput("");
+  }
+
+  console.log(`input: ${input}`)
 
   return (
     <div className="App"> 
           <h1> Image Gallery</h1> 
           <div className="search-bar">
-            <Search handleChange={handleChange} />
+            <Search value={input} handleChange={(e)=> setInput(e.target.value)} />
             <Button handleClick={handleClick} name="Search"/>
-            <Select handleChange={handleChange} />
+            <Select handleChange={handleSelectChange} />
+            <Button handleClick={handleReset} name="Reset"/>
 
           </div>
           <div className="data-container">
