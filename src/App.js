@@ -33,6 +33,7 @@ function App() {
   const handleReset = (e) => {
     setInput("");
     setSelectInput("");
+    document.getElementById('typeSelector').value='';
   };
 
   return (

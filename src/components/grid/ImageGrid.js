@@ -4,10 +4,10 @@ import './ImageGrid.css';
 const ImageGrid = (props)=>{
     const respMap = props.data.map((x)=>{
         return (
-        <div style={{'display':'block'}}>
+        <div style={{'display':'block'}}  key={x._id}>
           <div>{x.scraped_site.substring(0, 20) + "..."}</div>
             <div>{x._type === "I"? "Image": "Video" }</div>
-          <div className="img-wrap" key={x._id}>
+          <div className="img-wrap">
             {x._type === "I" ? <img src={x.url}></img>: 
             
             <video controls>
