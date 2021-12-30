@@ -1,0 +1,31 @@
+.img-grid {
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 40px;
+}
+
+.img-wrap {
+  border: 1px solid blue;
+  overflow: hidden;
+  height: 0;
+  padding: 20% 0;
+  position: relative;
+  opacity: 1;
+}
+
+.img-wrap video {
+  height: 800px;
+  width: 400px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.img-wrap img {
+  height: 800px;
+  width: 400px;
+  position: relative;
+  top: 0;
+  left: 0;
+}

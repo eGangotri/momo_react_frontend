@@ -4,7 +4,6 @@ const username = "admin";
 const password = "supersecret";
 
 export async function retrieveAllImages() {
-  console.log("retrieveAllImages");
   var obj = {
     method: "GET",
     headers: {
@@ -17,9 +16,7 @@ export async function retrieveAllImages() {
   };
   try {
     const response = await fetch("/momos/retrieve", obj);
-    // const response = await fetch('www.google.com');
     const result = await response.json();
-    console.log(`result${JSON.stringify(result)}`);
     return result;
   } catch (error) {
     console.log(error);

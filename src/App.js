@@ -1,93 +1,51 @@
-import './App.css';
-import { retrieveAllImages } from './services/retrieveService';
-import { useEffect, useState } from 'react';
-import ImageGrid from './components/grid/ImageGrid';
-import Search from './components/search/Search';
-import Button from './components/Button/Button';
-import Select from './components/select/Select';
+import "./App.css";
+import { retrieveAllImages } from "./services/retrieveService";
+import { useEffect, useState } from "react";
+import ImageGrid from "./components/grid/ImageGrid";
+import Search from "./components/search/Search";
+import Button from "./components/Button/Button";
+import Select from "./components/select/Select";
 
- function App() {
-   const [data, setData] = useState([]);
-   const [input, setInput] = useState('');
-   const [selectInput, setSelectInput] = useState('');
-   
-  //  useEffect(()=>{
-  //   const x = retrieveAllImages().then( (resp) => {
-  //     const respMap = resp.map((x)=>{
-  //       return `<li>${x.urlsascsv}</li>`
-  //     })
-  //     setData(resp);
-  //     console.log(`resp ${JSON.stringify(resp,null,2)}`)
-  //     console.log(`respMap ${respMap}`)
-  //   });
-  //  },[]);
+function App() {
+  const [data, setData] = useState([]);
+  const [input, setInput] = useState("");
+  const [selectInput, setSelectInput] = useState("");
 
-useEffect(()=>{
-     if(input === ''){
-      const x = retrieveAllImages().then( (resp) => {
-        const respMap = resp.map((x)=>{
-          return `<li>
-          ${x.url}
-          ${x.scraped_site}
-          ${x._type === "I"? "Image": "Video" }
-          </li>`
-        })
-        setData(resp);
-      });
-     }
-     else{
-      setData(data.filter(_x => _x.scraped_site.includes(input)));
-     }
-  },[input]);
-
-  //  useEffect(()=>{
-  //   if (selectInput === ''){
-  //     const x = retrieveAllImages().then( (resp) => {
-  //       const respMap = resp.map((x)=>{
-  //         return `<li>
-  //         ${x.url}
-  //         ${x.scraped_site}
-  //         ${x._type === "I"? "Image": "Video" }
-  //         </li>`
-  //       })
-  //       setData(resp);
-  //     });
-  //   }
-  //   else{
-  //     setData(data.filter(_x => _x._type === "I"));
-  //   }
-  // },[selectInput]);
-
-
-   const handleSelectChange = (e) => {
-     console.log(`e ${e.target.value}`)
-     setSelectInput(e.target.value);
-   }
-
-   const handleClick = (e) => {
-    console.log(`e ${e.target.value}`)
-  }
+  useEffect(() => {
+    (async () => {
+      const allImages = await retrieveAllImages();
+      if (input === "" && selectInput === "") {
+        setData(allImages);
+      } else if (input !== "" && selectInput !== "") {
+        setData(
+          allImages.filter(
+            (_x) => _x.scraped_site.includes(input) && _x._type === selectInput
+          )
+        );
+      } else if (input !== "" && selectInput === "") {
+        setData(allImages.filter((_x) => _x.scraped_site.includes(input)));
+      } else if (input === "" && selectInput !== "") {
+        setData(allImages.filter((_x) => _x._type === selectInput));
+      }
+    })();
+  }, [input, selectInput]);
 
   const handleReset = (e) => {
     setInput("");
     setSelectInput("");
-  }
-
-  console.log(`input: ${input}`)
+  };
 
   return (
-    <div className="App"> 
-          <h1> Image Gallery</h1> 
-          <div className="search-bar">
-            <Search value={input} handleChange={(e)=> setInput(e.target.value)} />
-            <Button handleClick={handleClick} name="Search"/>
-            <Select handleChange={handleSelectChange} />
-            <Button handleClick={handleReset} name="Reset"/>
-
-          </div>
-          <div className="data-container">
-            <ImageGrid data={data} />
-          </div>
+    <div className="App">
+      <h1> Image Gallery</h1>
+      <div className="search-bar">
+        <Search value={input} handleChange={(e) => setInput(e.target.value)} />
+        <Select handleChange={(e) => setSelectInput(e.target.value)} />
+        <Button handleClick={handleReset} name="Reset" />
+      </div>
+      <div className="data-container">
+        <ImageGrid data={data} />
+      </div>
     </div>
   );
 }
