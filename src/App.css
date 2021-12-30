@@ -11,9 +11,7 @@ body{
   font-family: "Noto Serif";
   color: var(--secondary);
   margin: 0 auto;
-}
-.App{
-border: 1px solid #03095a;
+  padding: 20px;
 }
 
 
@@ -36,13 +34,21 @@ overflow:hidden;
 height:0;
 padding: 20% 0;
 position: relative;
-opacity: 0.8;
+opacity: 1;
+}
+
+.img-wrap video {
+  height: 800px;
+  width: 400px;
+  position: relative;
+  top: 0;
+  left:0;
 }
 
 .img-wrap img {
-  min-width:20%;
-  min-height:20%;
-  position: absolute;
+  height: 800px;
+  width: 400px;
+  position: relative;
   top: 0;
   left:0;
 }

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { retrieveAllImages } from './services/retrieveService';
 import { useEffect, useState } from 'react';
@@ -12,43 +11,52 @@ import Select from './components/select/Select';
    const [input, setInput] = useState('');
    const [selectInput, setSelectInput] = useState('');
    
-   useEffect(()=>{
-    const x = retrieveAllImages().then( (resp) => {
-      const respMap = resp.map((x)=>{
-        return `<li>${x.urlsascsv}</li>`
-      })
-      setData(resp);
-      console.log(`resp ${JSON.stringify(resp,null,2)}`)
-      console.log(`respMap ${respMap}`)
-    });
-   },[]);
+  //  useEffect(()=>{
+  //   const x = retrieveAllImages().then( (resp) => {
+  //     const respMap = resp.map((x)=>{
+  //       return `<li>${x.urlsascsv}</li>`
+  //     })
+  //     setData(resp);
+  //     console.log(`resp ${JSON.stringify(resp,null,2)}`)
+  //     console.log(`respMap ${respMap}`)
+  //   });
+  //  },[]);
 
-   useEffect(()=>{
+useEffect(()=>{
      if(input === ''){
       const x = retrieveAllImages().then( (resp) => {
         const respMap = resp.map((x)=>{
-          return `<li>${x.urlsascsv}</li>`
+          return `<li>
+          ${x.url}
+          ${x.scraped_site}
+          ${x._type === "I"? "Image": "Video" }
+          </li>`
         })
         setData(resp);
       });
      }
      else{
-      setData(data.filter(_x => _x.urlsascsv.includes(input)));
+      setData(data.filter(_x => _x.scraped_site.includes(input)));
      }
-   },[input]);
+  },[input]);
 
-   useEffect(()=>{
-    if (selectInput === 'image'){
-
-    }
-    
-    else if (selectInput === 'video'){
-
-    }
-    else{
-
-    }
-  },[selectInput]);
+  //  useEffect(()=>{
+  //   if (selectInput === ''){
+  //     const x = retrieveAllImages().then( (resp) => {
+  //       const respMap = resp.map((x)=>{
+  //         return `<li>
+  //         ${x.url}
+  //         ${x.scraped_site}
+  //         ${x._type === "I"? "Image": "Video" }
+  //         </li>`
+  //       })
+  //       setData(resp);
+  //     });
+  //   }
+  //   else{
+  //     setData(data.filter(_x => _x._type === "I"));
+  //   }
+  // },[selectInput]);
 
 
    const handleSelectChange = (e) => {

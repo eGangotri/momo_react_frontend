@@ -4,8 +4,8 @@ const Select = ({handleChange})=>{
     return (
         <select type="search" placeholder="Search"onChange={ handleChange}>
             <option value="">All</option>
-            <option value="image">Image</option>
-            <option value="video">Video</option>
+            <option value="I">Image</option>
+            <option value="V">Video</option>
         </select>
     )
 }
